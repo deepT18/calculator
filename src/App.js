@@ -48,23 +48,30 @@ function App() {
     } else if (value === '=') {
       if (input !== '') {
         try {
-          // Check for division by zero
-          if (input.includes('/0')) {
-            throw new Error('Division by zero');
-          }
-
           const newAnswer = eval(input);
-          setAnswer(newAnswer);
-          setInput('');
+          if (newAnswer === Infinity) {
+            setInput('Error: Division by zero');
+          } else if (newAnswer !== newAnswer) {
+            setInput('Error: Zero divided by zero');
+          } else {
+            setAnswer(newAnswer);
+            setInput('');
+          }
         } catch (error) {
-          console.log('Error: Invalid expression');
-          setInput(`Error: ${error.message}`);
+          if (input === '') {
+            setInput('Error: Invalid expression');
+          } else {
+            console.log('Error: Invalid expression');
+            setInput(`Error: ${error.message}`);
+          }
         }
-      } else {
-        setInput('Error: Invalid expression');
       }
     } else {
-      setInput(input + value);
+      if (input === '' && (value === '+' || value === '-' || value === '*' || value === '/')) {
+        setInput(value);
+      } else {
+        setInput(input + value);
+      }
     }
   };
 
@@ -75,26 +82,26 @@ function App() {
       <div style={{ marginTop: 10 }}>{answer !== '' ? answer : ''}</div>
       <div className="operands">
         <div className="row">
-          <button type="button" onClick={() => handleButtonClick('7')}>7</button>
-          <button type="button" onClick={() => handleButtonClick('8')}>8</button>
-          <button type="button" onClick={() => handleButtonClick('9')}>9</button>
+          <button type="button" onClick={() => handleButtonClick(7)}>7</button>
+          <button type="button" onClick={() => handleButtonClick(8)}>8</button>
+          <button type="button" onClick={() => handleButtonClick(9)}>9</button>
           <button type="button" onClick={() => handleButtonClick('+')}>+</button>
         </div>
         <div className="row">
-          <button type="button" onClick={() => handleButtonClick('4')}>4</button>
-          <button type="button" onClick={() => handleButtonClick('5')}>5</button>
-          <button type="button" onClick={() => handleButtonClick('6')}>6</button>
+          <button type="button" onClick={() => handleButtonClick(4)}>4</button>
+          <button type="button" onClick={() => handleButtonClick(5)}>5</button>
+          <button type="button" onClick={() => handleButtonClick(6)}>6</button>
           <button type="button" onClick={() => handleButtonClick('-')}>-</button>
         </div>
         <div className="row">
-          <button type="button" onClick={() => handleButtonClick('1')}>1</button>
-          <button type="button" onClick={() => handleButtonClick('2')}>2</button>
-          <button type="button" onClick={() => handleButtonClick('3')}>3</button>
+          <button type="button" onClick={() => handleButtonClick(1)}>1</button>
+          <button type="button" onClick={() => handleButtonClick(2)}>2</button>
+          <button type="button" onClick={() => handleButtonClick(3)}>3</button>
           <button type="button" onClick={() => handleButtonClick('*')}>*</button>
         </div>
         <div className="row">
           <button type="button" onClick={() => handleButtonClick('C')}>C</button>
-          <button type="button" onClick={() => handleButtonClick('0')}>0</button>
+          <button type="button" onClick={() => handleButtonClick(0)}>0</button>
           <button type="button" onClick={() => handleButtonClick('=')}>=</button>
           <button type="button" onClick={() => handleButtonClick('/')}>/</button>
         </div>
