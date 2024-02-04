@@ -40,30 +40,31 @@ import './App.css';
 
 function App() {
   let [input, setInput] = useState('');
-  let [answer, setAnswer] = useState(0);
+  let [answer, setAnswer] = useState('');
 
   const handleButtonClick = (value) => {
     if (value === 'C') {
       setInput('');
-      setAnswer(0);
+      setAnswer('');
     } else if (value === '=') {
-      try {
-        setAnswer(eval(input));
-      } catch (error) {
-        console.log('Error: Invalid expression');
+      if (input !== '') {
+        try {
+          const newAnswer = eval(input);
+          setAnswer(newAnswer);
+        } catch (error) {
+          console.log('Error: Invalid expression');
+        }
       }
-    } else if (value === '+' || value === '-' || value === '*' || value === '/') {
-      setInput(prevInput => prevInput + value);
     } else {
-      setInput(prevInput => prevInput + value);
+      setInput(input + value);
     }
   };
 
   return (
     <div className="App">
       <h1>React Calculator</h1>
-      <input type="text" value={input} readOnly />
-      <div style={{ marginTop: 10 }}>{answer}</div>
+      <input type="text" value={input !== '' ? input : answer} readOnly />
+      <div style={{ marginTop: 10 }}>{answer !== '' ? answer : ''}</div>
       <div className="operands">
         <div className="row">
           <button type="button" onClick={() => handleButtonClick(7)}>7</button>
