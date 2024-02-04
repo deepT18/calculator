@@ -50,9 +50,9 @@ function App() {
         try {
           const newAnswer = eval(input);
           if (newAnswer === Infinity) {
-            setInput('Error: Division by zero');
+            setAnswer('Infinity');
           } else if (isNaN(newAnswer)) {
-            setInput('Error: Zero divided by zero');
+            setAnswer(NaN);
           } else {
             setAnswer(newAnswer);
             setInput('');
