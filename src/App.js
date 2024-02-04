@@ -51,7 +51,7 @@ function App() {
           const newAnswer = eval(input);
           if (newAnswer === Infinity) {
             setInput('Error: Division by zero');
-          } else if (newAnswer !== newAnswer) {
+          } else if (isNaN(newAnswer)) {
             setInput('Error: Zero divided by zero');
           } else {
             setAnswer(newAnswer);
