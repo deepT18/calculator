@@ -32,55 +32,62 @@
 // }
 
 // export default App;
+
+
+
 import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  let [input, setInput] = useState('');
   let [answer, setAnswer] = useState(0);
 
   const handleButtonClick = (value) => {
     if (value === 'C') {
+      setInput('');
       setAnswer(0);
     } else if (value === '=') {
       try {
-        setAnswer(eval(answer));
+        setAnswer(eval(input));
       } catch (error) {
         console.log('Error: Invalid expression');
       }
+    } else if (value === '+' || value === '-' || value === '*' || value === '/') {
+      setInput(prevInput => prevInput + value);
     } else {
-      setAnswer(prevAnswer => prevAnswer + value);
+      setInput(prevInput => prevInput + value);
     }
   };
 
   return (
     <div className="App">
       <h1>React Calculator</h1>
-      <input value={answer} readOnly />
-      <div style={{marginTop: 10}}>{answer}</div>
+      <input type="text" value={input} readOnly />
+      <div style={{ marginTop: 10 }}>{answer}</div>
       <div className="operands">
         <div className="row">
-          <button onClick={() => handleButtonClick(7)}>7</button>
-          <button onClick={() => handleButtonClick(8)}>8</button>
-          <button onClick={() => handleButtonClick(9)}>9</button>
-          <button onClick={() => handleButtonClick('+')}>+</button>
+          <button type="button" onClick={() => handleButtonClick(7)}>7</button>
+          <button type="button" onClick={() => handleButtonClick(8)}>8</button>
+          <button type="button" onClick={() => handleButtonClick(9)}>9</button>
+          <button type="button" onClick={() => handleButtonClick('+')}>+</button>
         </div>
         <div className="row">
-          <button onClick={() => handleButtonClick(4)}>4</button>
-          <button onClick={() => handleButtonClick(5)}>5</button>
-          <button onClick={() => handleButtonClick(6)}>6</button>
-          <button onClick={() => handleButtonClick('-')}>-</button>
+          <button type="button" onClick={() => handleButtonClick(4)}>4</button>
+          <button type="button" onClick={() => handleButtonClick(5)}>5</button>
+          <button type="button" onClick={() => handleButtonClick(6)}>6</button>
+          <button type="button" onClick={() => handleButtonClick('-')}>-</button>
         </div>
         <div className="row">
-          <button onClick={() => handleButtonClick(1)}>1</button>
-          <button onClick={() => handleButtonClick(2)}>2</button>
-          <button onClick={() => handleButtonClick(3)}>3</button>
-          <button onClick={() => handleButtonClick('*')}>*</button>
+          <button type="button" onClick={() => handleButtonClick(1)}>1</button>
+          <button type="button" onClick={() => handleButtonClick(2)}>2</button>
+          <button type="button" onClick={() => handleButtonClick(3)}>3</button>
+          <button type="button" onClick={() => handleButtonClick('*')}>*</button>
         </div>
         <div className="row">
-          <button onClick={() => handleButtonClick('C')}>C</button>
-          <button onClick={() => handleButtonClick(0)}>0</button>
-          <button onClick={() => handleButtonClick('=')}>=</button>
-          <button onClick={() => handleButtonClick('/')}>/</button>
+          <button type="button" onClick={() => handleButtonClick('C')}>C</button>
+          <button type="button" onClick={() => handleButtonClick(0)}>0</button>
+          <button type="button" onClick={() => handleButtonClick('=')}>=</button>
+          <button type="button" onClick={() => handleButtonClick('/')}>/</button>
         </div>
       </div>
     </div>
