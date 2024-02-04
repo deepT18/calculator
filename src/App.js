@@ -49,14 +49,18 @@ function App() {
     } else if (value === '=') {
       if (input !== '') {
         try {
-          const newAnswer = eval(input);
-          setAnswer(newAnswer);
+          setAnswer(eval(input));
+          setInput('');
         } catch (error) {
-          console.log('Error: Invalid expression');
+          setInput(`Error: ${error.message}`);
         }
+      } else {
+        setInput('Error: Invalid expression');
       }
+    } else if (value === '+' || value === '-' || value === '*' || value === '/') {
+      setInput(prevInput => prevInput + value);
     } else {
-      setInput(input + value);
+      setInput(prevInput => prevInput + value);
     }
   };
 
