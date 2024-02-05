@@ -38,8 +38,8 @@ import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  let [input, setInput] = useState('');
-  let [answer, setAnswer] = useState('');
+  const [input, setInput] = useState('');
+  const [answer, setAnswer] = useState('');
 
   const handleButtonClick = (value) => {
     if (value === 'C') {
@@ -48,30 +48,22 @@ function App() {
     } else if (value === '=') {
       if (input !== '') {
         try {
-          const newAnswer = eval(input);
+          const newAnswer = Function(`return (${input})`)();
           if (newAnswer === Infinity) {
             setAnswer('Infinity');
           } else if (isNaN(newAnswer)) {
-            setAnswer(NaN);
+            setAnswer('NaN');
           } else {
-            setAnswer(newAnswer);
-            setInput('');
+            setAnswer(newAnswer.toString());
           }
         } catch (error) {
-          if (input === '') {
-            setInput('Error: Invalid expression');
-          } else {
-            console.log('Error: Invalid expression');
-            setInput(`Error: ${error.message}`);
-          }
+          setInput(`Error: ${error.message}`);
         }
+      } else {
+        setAnswer('Error');
       }
     } else {
-      if (input === '' && (value === '+' || value === '-' || value === '*' || value === '/')) {
-        setInput(value);
-      } else {
-        setInput(input + value);
-      }
+      setInput((prevInput) => prevInput + value.toString());
     }
   };
 
@@ -111,5 +103,3 @@ function App() {
 }
 
 export default App;
-
-
